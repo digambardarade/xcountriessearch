@@ -52,56 +52,20 @@ export default function XCountriesSearch() {
     setSearchText(e.target.value);
   }
 
-  const cardStyle = {
-    width: "200px",
-    height: "200px",
-    border: "1px solid #ccc",
-    borderRadius: "10px",
-    margin: "10px",
-    padding: "10px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  };
 
-  const imageStyle = {
-    width: "100px",
-    height: "100px",
-  };
-
-  const containerStyle = {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    height: "100vh",
-    marginTop: "30px",
-  };
-
-  const searchBoxContainer = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "60px",
-  };
-
-  const searchBox = {
-    width: "800px",
-    height: "30px",
-  };
 
   return (
     <div>
-      <div style={{ backgroundColor: "rgba(0,0,0,0.1)" }}>
+      <div className="search-bar-bg">
         <form
-          style={searchBoxContainer}
+          className="search-box-container"
           onSubmit={(e) => {
             e.preventDefault();
             searchCountries();
           }}
         >
           <input
-            style={searchBox}
+            className="search-box"
             type="text"
             value={searchText}
             onChange={(e) => handleSearch(e)}
@@ -109,16 +73,16 @@ export default function XCountriesSearch() {
           />
         </form>
       </div>
-      <div style={containerStyle}>
+      <div className="countries-container">
         {searchData.length === 0 ? (
           <div>No countries found.</div>
         ) : (
           searchData.map((country) => (
-            <div key={country.name} style={cardStyle} className="countryCard">
+            <div key={country.name} className="countryCard">
               <img
                 src={country.flag}
                 alt={`Flag of ${country.name}`}
-                style={imageStyle}
+                className="country-flag"
               />
               <h2>{country.name}</h2>
             </div>
