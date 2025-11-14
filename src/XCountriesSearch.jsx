@@ -7,7 +7,7 @@ export default function XCountriesSearch() {
   const [searchData, setSearchData] = useState([]);
 
   useEffect(() => {
-    fetch("https://countries-search-data-prod-812920491762.asia-south1.run.app/countries")
+    fetch("https://xcountries-backend.labs.crio.do/all")
       .then((res) => {
         if (!res.ok) throw new Error('Network response was not ok');
         return res.json();
