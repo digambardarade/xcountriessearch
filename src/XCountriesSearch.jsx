@@ -13,29 +13,23 @@ export default function XCountriesSearch() {
         return res.json();
       })
       .then((data) => {
+        console.log(data);
         setCountries(data);
         setSearchData(data);
       })
       .catch((err) => {
-        console.error("Error fetching data from API, using mock data: ", err);
-        fetch("/mock-countries.json")
-          .then((res) => res.json())
-          .then((data) => {
-            setCountries(data);
-            setSearchData(data);
-          })
-          .catch((err) => console.error("Error fetching mock data: ", err));
+        console.error("Error fetching data from API: ", err);
       });
   }, []);
 
   const searchCountries = useCallback(() => {
-    if (searchText === "") {
+    const trimmed = searchText.trim().toLowerCase();
+    if (trimmed === "") {
       setSearchData(countries);
       return;
     }
-
     const filteredData = countries.filter((country) =>
-      country.name.toLowerCase().includes(searchText.toLowerCase())
+      country.name.trim().toLowerCase().includes(trimmed)
     );
     setSearchData(filteredData);
   }, [searchText, countries]);
@@ -43,8 +37,7 @@ export default function XCountriesSearch() {
   useEffect(() => {
     const timer = setTimeout(() => {
       searchCountries();
-    }, 300); // Adjust the debounce delay as needed
-
+    }, 300);
     return () => clearTimeout(timer);
   }, [searchText, searchCountries]);
 
@@ -52,7 +45,11 @@ export default function XCountriesSearch() {
     setSearchText(e.target.value);
   }
 
-
+  // Helper to generate a unique key for each country
+  function getCountryKey(country, idx) {
+    // Prefer a unique code if available, else fallback to name+index
+    return country.code || country.cca3 || country.name + '-' + idx;
+  }
 
   return (
     <div>
@@ -68,7 +65,7 @@ export default function XCountriesSearch() {
             className="search-box"
             type="text"
             value={searchText}
-            onChange={(e) => handleSearch(e)}
+            onChange={handleSearch}
             placeholder="Search for countries..."
           />
         </form>
@@ -77,8 +74,8 @@ export default function XCountriesSearch() {
         {searchData.length === 0 ? (
           <div>No countries found.</div>
         ) : (
-          searchData.map((country) => (
-            <div key={country.name} className="countryCard">
+          searchData.map((country, idx) => (
+            <div key={getCountryKey(country, idx)} className="countryCard">
               <img
                 src={country.flag}
                 alt={`Flag of ${country.name}`}
