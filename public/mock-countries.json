@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Canada",
+    "flag": "https://flagcdn.com/ca.svg"
+  },
+  {
+    "name": "India",
+    "flag": "https://flagcdn.com/in.svg"
+  },
+  {
+    "name": "Australia",
+    "flag": "https://flagcdn.com/au.svg"
+  },
+  {
+    "name": "Germany",
+    "flag": "https://flagcdn.com/de.svg"
+  }
+]
