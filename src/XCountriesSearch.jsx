@@ -18,7 +18,8 @@ export default function XCountriesSearch() {
         setSearchData(data);
       })
       .catch((err) => {
-        console.error("Error fetching data from API: ", err);
+        // For testability, log a specific error message
+        console.error("API_ERROR: Error fetching data from API", err);
       });
   }, []);
 
